@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/todo_list.dart';
+import 'screen.dart';
+import 'todo_list_route.dart';
 
 void main() => runApp(new MyApp());
 
@@ -20,11 +21,9 @@ class MyApp extends StatelessWidget {
 class TodoListApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Todo List"),
-      ),
-      body: TodoList() // This trailing comma makes auto-formatting nicer for build methods.
+    return Screen(
+      title: "Todo List",
+      body: TodoListRoute(),
     );
   }
 }
