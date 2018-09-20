@@ -2,21 +2,26 @@ import 'package:flutter/material.dart';
 import 'todo_route.dart';
 import 'todo.dart';
 
-class _TodoRowState extends State<TodoRow> {
-  Todo todo;
+typedef void TodoChanged(Todo newTodo);
 
-  _TodoRowState({@required this.todo}) : assert(todo != null);
+class TodoRow extends StatelessWidget {
+  final Todo todo;
+  final TodoChanged onChanged;
+
+  TodoRow({@required this.todo, this.onChanged}) : assert(todo != null);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => TodoRoute(
-                      todo: todo,
-                    )));
+          context,
+          MaterialPageRoute(
+            builder: (context) => TodoRoute(
+                  todo: todo,
+                ),
+          ),
+        );
       },
       highlightColor: Colors.pinkAccent,
       child: Padding(
@@ -41,14 +46,14 @@ class _TodoRowState extends State<TodoRow> {
             ),
             Checkbox(
               onChanged: (isOn) {
-                setState(() {
-                  todo = Todo(
+                onChanged(
+                  Todo(
                     isDone: isOn,
                     icon: todo.icon,
                     title: todo.title,
                     description: todo.description,
-                  );
-                });
+                  ),
+                );
               },
               value: todo.isDone,
             ),
@@ -57,13 +62,4 @@ class _TodoRowState extends State<TodoRow> {
       ),
     );
   }
-}
-
-class TodoRow extends StatefulWidget {
-  final Todo todo;
-
-  TodoRow({@required this.todo}) : assert(todo != null);
-
-  @override
-  _TodoRowState createState() => _TodoRowState(todo: todo);
 }
