@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'todo_route.dart';
 import 'todo.dart';
 
-class TodoRow extends StatelessWidget {
-  final Todo todo;
+class _TodoRowState extends State<TodoRow> {
+  Todo todo;
 
-  TodoRow({@required this.todo}) : assert(todo != null);
+  _TodoRowState({@required this.todo}) : assert(todo != null);
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +39,31 @@ class TodoRow extends StatelessWidget {
                 ),
               ),
             ),
+            Checkbox(
+              onChanged: (isOn) {
+                setState(() {
+                  todo = Todo(
+                    isDone: isOn,
+                    icon: todo.icon,
+                    title: todo.title,
+                    description: todo.description,
+                  );
+                });
+              },
+              value: todo.isDone,
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+class TodoRow extends StatefulWidget {
+  final Todo todo;
+
+  TodoRow({@required this.todo}) : assert(todo != null);
+
+  @override
+  _TodoRowState createState() => _TodoRowState(todo: todo);
 }
