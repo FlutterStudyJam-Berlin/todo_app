@@ -12,7 +12,11 @@ class TodoRow extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => TodoRoute(todo: todo,)));
+            context,
+            MaterialPageRoute(
+                builder: (context) => TodoRoute(
+                      todo: todo,
+                    )));
       },
       highlightColor: Colors.pinkAccent,
       child: Padding(
@@ -26,7 +30,12 @@ class TodoRow extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
                   todo.title,
-                  style: TextStyle(fontSize: 24.0),
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    decoration: todo.isDone
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                  ),
                 ),
               ),
             ),
