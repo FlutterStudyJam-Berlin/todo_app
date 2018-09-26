@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'screen.dart';
 import 'todo_list_route.dart';
+import 'add_todo_route.dart';
 
 void main() => runApp(new MyApp());
 
@@ -25,7 +26,12 @@ class TodoListApp extends StatelessWidget {
       title: "Todo List",
       body: TodoListRoute(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddTodoRoute()),
+          );
+        },
         child: Icon(Icons.add),
       ),
     );
