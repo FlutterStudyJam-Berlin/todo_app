@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class Screen extends StatelessWidget {
   final String title;
   final Widget body;
+  final FloatingActionButton floatingActionButton;
 
   const Screen({
     @required this.title,
     @required this.body,
+    this.floatingActionButton,
   })  : assert(title != null),
         assert(body != null);
 
@@ -17,6 +19,7 @@ class Screen extends StatelessWidget {
         title: Text(title),
       ),
       body: body,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

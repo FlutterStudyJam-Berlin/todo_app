@@ -24,6 +24,10 @@ class TodoListApp extends StatelessWidget {
     return Screen(
       title: "Todo List",
       body: TodoListRoute(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
