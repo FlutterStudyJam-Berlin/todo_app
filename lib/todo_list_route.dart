@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'todos_repository.dart';
 import 'todo_row.dart';
 import 'todo.dart';
 
@@ -8,18 +9,23 @@ class TodoListRoute extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoListRoute> {
-  List<Todo> _items = <Todo>[
-    Todo(title: "Foo 1", description: "This is a fancy description", isDone: true, icon: Icons.ac_unit),
-    Todo(title: "Foo 2", isDone: true, icon: Icons.ac_unit),
-    Todo(title: "Foo 3", isDone: true, icon: Icons.ac_unit),
-    Todo(title: "Foo 4", isDone: false, icon: Icons.ac_unit),
-  ];
+  List<Todo> _items = TodosRepository().getTodos();
+
+  @override
+  void initState() {
+    TodosRepository().subscribe((todos) {
+      setState(() {
+        _items = todos;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return TodoList(items: _items, todoChanged: (index, changedTodo) {
       setState(() {
-        _items[index] = changedTodo;
+        TodosRepository().updateTodo(changedTodo);
       });
     });
   }

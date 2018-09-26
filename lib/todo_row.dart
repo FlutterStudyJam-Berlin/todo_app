@@ -48,6 +48,7 @@ class TodoRow extends StatelessWidget {
               onChanged: (isOn) {
                 onChanged(
                   Todo(
+                    uuid: todo.uuid,
                     isDone: isOn,
                     icon: todo.icon,
                     title: todo.title,

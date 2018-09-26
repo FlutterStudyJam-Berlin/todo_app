@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'screen.dart';
+import 'todo.dart';
+import 'todos_repository.dart';
 
 class AddTodoRoute extends StatefulWidget {
   @override
@@ -20,6 +23,16 @@ class AddTodoRouteState extends State<AddTodoRoute> {
           onPressed: () {
             setState(() {
               _showEmptyError = _todoText.isEmpty;
+              if (_todoText.isNotEmpty) {
+                TodosRepository().addTodo(Todo(
+                  uuid: Uuid().v1(),
+                  title: _todoText,
+                  isDone: false,
+                  icon: Icons.access_alarm,
+                ));
+
+                Navigator.pop(context);
+              }
             });
           },
         )
