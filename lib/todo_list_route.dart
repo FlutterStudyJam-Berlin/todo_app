@@ -44,11 +44,19 @@ class TodoList extends StatelessWidget {
     return ListView.builder(
         itemCount: items.length,
         itemBuilder: (BuildContext context, int index) {
-          return TodoRow(
-            todo: items[index],
-            onChanged: (newTodo) {
-              todoChanged(index, newTodo);
-            }
+          return Dismissible(
+            key: Key(items[index].uuid),
+            onDismissed: (direction) {
+              TodosRepository().deleteTodo(items[index]);
+            },
+            background: Container(color: Colors.red),
+            direction: DismissDirection.endToStart,
+            child: TodoRow(
+              todo: items[index],
+              onChanged: (newTodo) {
+                todoChanged(index, newTodo);
+              }
+            ),
           );
         });
   }

@@ -46,6 +46,19 @@ class TodosRepository {
     _notifySubscribers();
   }
 
+  void deleteTodo(Todo deletedTodo) {
+    int index = _items.indexWhere((todo) {
+      return todo.uuid == deletedTodo.uuid;
+    });
+
+    if (index == -1) {
+      return;
+    }
+
+    _items.removeAt(index);
+    _notifySubscribers();
+  }
+
   List<Todo> getTodos() => _items;
 
   void subscribe(OnTodosChanged onTodosChanged) =>
