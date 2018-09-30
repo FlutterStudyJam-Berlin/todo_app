@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
-import 'todo_route.dart';
 import 'todo.dart';
 
+typedef void TodoSelected(Todo todo);
 typedef void TodoChanged(Todo newTodo);
 
 class TodoRow extends StatelessWidget {
   final Todo todo;
+  final TodoSelected onTap;
   final TodoChanged onChanged;
 
-  TodoRow({@required this.todo, this.onChanged}) : assert(todo != null);
+  TodoRow({@required this.todo, this.onTap, this.onChanged}) : assert(todo != null);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => TodoRoute(
-                  todo: todo,
-                ),
-          ),
-        );
+        if (onTap != null) {
+          onTap(todo);
+        }
       },
       highlightColor: Colors.pinkAccent,
       child: Padding(
