@@ -17,4 +17,11 @@ class Todo {
         assert(title != null),
         assert(isDone != null),
         assert(icon != null);
+
+  Todo.fromJson(Map<String, dynamic> json) :
+      uuid = json['uuid'],
+      title = json['title'],
+      description = json['description'] == null ? "" : json['description'],
+      isDone = json['isDone'],
+      icon = Icons.adjust;
 }

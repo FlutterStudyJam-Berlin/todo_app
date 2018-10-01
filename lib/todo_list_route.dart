@@ -20,6 +20,7 @@ class _TodoListState extends State<TodoListRoute> {
         _items = todos;
       });
     });
+    TodosRepository().load();
     super.initState();
   }
 

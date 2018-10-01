@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 import 'todo.dart';
+import 'api.dart';
 
 typedef void OnTodosChanged(List<Todo> todos);
 
@@ -13,19 +12,22 @@ class TodosRepository {
 
   TodosRepository._internal();
 
-  List<Todo> _items = <Todo>[
-    Todo(
-        uuid: Uuid().v1(),
-        title: "Foo 1",
-        description: "This is a fancy description",
-        isDone: true,
-        icon: Icons.ac_unit),
-    Todo(uuid: Uuid().v1(), title: "Foo 2", isDone: true, icon: Icons.ac_unit),
-    Todo(uuid: Uuid().v1(), title: "Foo 3", isDone: true, icon: Icons.ac_unit),
-    Todo(uuid: Uuid().v1(), title: "Foo 4", isDone: false, icon: Icons.ac_unit),
-  ];
+  final _api = Api();
+
+  List<Todo> _items = <Todo>[];
 
   List<OnTodosChanged> _subscribers = [];
+
+  void load() {
+    _api.getTodos().then(
+          (todos) {
+            print("$todos");
+            _items = todos;
+            _notifySubscribers();
+          },
+          onError: (error) => print("Error: $error"),
+        );
+  }
 
   void addTodo(Todo todo) {
     _items.add(todo);
