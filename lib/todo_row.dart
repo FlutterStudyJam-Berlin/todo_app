@@ -4,15 +4,26 @@ import 'todo.dart';
 
 class TodoRow extends StatelessWidget {
   final Todo todo;
+  final void Function(Todo updatedTodo) onTodoUpdated;
 
-  TodoRow({@required this.todo}) : assert(todo != null);
+  TodoRow({
+    @required this.todo,
+    @required this.onTodoUpdated,
+  }) : assert(todo != null), assert(onTodoUpdated != null);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => TodoRoute(todo: todo,)));
+          context,
+          MaterialPageRoute(
+            builder: (context) => TodoRoute(
+                  todo: todo,
+                  onTodoUpdated: onTodoUpdated,
+                ),
+          ),
+        );
       },
       highlightColor: Colors.pinkAccent,
       child: Padding(
@@ -26,7 +37,12 @@ class TodoRow extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
                   todo.title,
-                  style: TextStyle(fontSize: 24.0),
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    decoration: todo.isDone
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                  ),
                 ),
               ),
             ),

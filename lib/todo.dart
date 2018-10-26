@@ -14,4 +14,18 @@ class Todo {
   })  : assert(title != null),
         assert(isDone != null),
         assert(icon != null);
+
+  Todo copy({
+    String title,
+    String description,
+    bool isDone,
+    IconData icon,
+  }) {
+    return Todo(
+      title: title ?? this.title,
+      description: description ?? this.description,
+      isDone: isDone ?? this.isDone,
+      icon: icon ?? this.icon,
+    );
+  }
 }
