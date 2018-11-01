@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'todo_route.dart';
+
+import 'navutils.dart';
 import 'todo.dart';
+import 'todo_route.dart';
 
 typedef void TodoChanged(Todo newTodo);
 
@@ -14,13 +16,11 @@ class TodoRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
+        navigateTo(
           context,
-          MaterialPageRoute(
-            builder: (context) => TodoRoute(
-                  todo: todo,
-                ),
-          ),
+          (context) => TodoRoute(
+                todo: todo,
+              ),
         );
       },
       highlightColor: Colors.pinkAccent,
@@ -46,14 +46,7 @@ class TodoRow extends StatelessWidget {
             ),
             Checkbox(
               onChanged: (isOn) {
-                onChanged(
-                  Todo(
-                    isDone: isOn,
-                    icon: todo.icon,
-                    title: todo.title,
-                    description: todo.description,
-                  ),
-                );
+                onChanged(todo.copy(isDone: isOn));
               },
               value: todo.isDone,
             ),
