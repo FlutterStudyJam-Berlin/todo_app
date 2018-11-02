@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'todo_row.dart';
+
 import 'todo.dart';
+import 'todo_row.dart';
+import 'todo_list_repository.dart';
 
 class TodoListRoute extends StatefulWidget {
   @override
@@ -8,20 +10,15 @@ class TodoListRoute extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoListRoute> {
-  List<Todo> _items = <Todo>[
-    Todo(title: "Foo 1", description: "This is a fancy description", isDone: true, icon: Icons.ac_unit),
-    Todo(title: "Foo 2", isDone: true, icon: Icons.ac_unit),
-    Todo(title: "Foo 3", isDone: true, icon: Icons.ac_unit),
-    Todo(title: "Foo 4", isDone: false, icon: Icons.ac_unit),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return TodoList(items: _items, todoChanged: (index, changedTodo) {
-      setState(() {
-        _items[index] = changedTodo;
-      });
-    });
+    return TodoList(
+        items: TodosRepository().getTodos(),
+        todoChanged: (index, changedTodo) {
+          setState(() {
+            TodosRepository().updateTodo(changedTodo);
+          });
+        });
   }
 }
 
@@ -31,7 +28,8 @@ class TodoList extends StatelessWidget {
   final List<Todo> items;
   final TodoChanged todoChanged;
 
-  const TodoList({@required this.items, this.todoChanged}) : assert(items != null);
+  const TodoList({@required this.items, this.todoChanged})
+      : assert(items != null);
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +37,10 @@ class TodoList extends StatelessWidget {
         itemCount: items.length,
         itemBuilder: (BuildContext context, int index) {
           return TodoRow(
-            todo: items[index],
-            onChanged: (newTodo) {
-              todoChanged(index, newTodo);
-            }
-          );
+              todo: items[index],
+              onChanged: (newTodo) {
+                todoChanged(index, newTodo);
+              });
         });
   }
 }
