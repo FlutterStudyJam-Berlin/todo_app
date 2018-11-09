@@ -20,9 +20,9 @@ class TodosRepository {
         description: "This is a fancy description",
         isDone: true,
         icon: Icons.ac_unit),
-    Todo(uuid: Uuid().v1(), title: "Foo 2", isDone: true, icon: Icons.ac_unit),
-    Todo(uuid: Uuid().v1(), title: "Foo 3", isDone: true, icon: Icons.ac_unit),
-    Todo(uuid: Uuid().v1(), title: "Foo 4", isDone: false, icon: Icons.ac_unit),
+    Todo(uuid: Uuid().v1(), description: "This is a fancy description", title: "Foo 2", isDone: true, icon: Icons.ac_unit),
+    Todo(uuid: Uuid().v1(), description: "This is a fancy description", title: "Foo 3", isDone: true, icon: Icons.ac_unit),
+    Todo(uuid: Uuid().v1(), description: "This is a fancy description", title: "Foo 4", isDone: false, icon: Icons.ac_unit),
   ];
 
   List<OnTodosChanged> _subscribers = [];
@@ -43,6 +43,14 @@ class TodosRepository {
     }
 
     _items[index] = changedTodo;
+    _notifySubscribers();
+  }
+
+  void deleteTodo(Todo deletedTodo) {
+    _items.removeWhere((todo) {
+      return todo.uuid == deletedTodo.uuid;
+    });
+
     _notifySubscribers();
   }
 
